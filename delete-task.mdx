@@ -1,28 +1,33 @@
-# Apagar tarefa
+---
+title: "Delete Task"
+description: "Permanently delete a task from a project."
+---
 
-Apaga permanentemente uma tarefa. Essa ação não pode ser desfeita.
+# Delete Task
+
+Permanently deletes a task. This action cannot be undone.
 
 ---
 
-## Requisição
+## Request
 
 ```
 DELETE /tasks/{task_id}
 ```
 
-### Cabeçalhos
+### Headers
 
-| Cabeçalho | Valor |
+| Header | Value |
 |---|---|
 | `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
 
-### Parâmetros de URL
+### URL Parameters
 
-| Parâmetro | Tipo | Obrigatório | Descrição |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `task_id` | string (uuid) | Sim | ID da tarefa que você quer apagar |
+| `task_id` | string (uuid) | Yes | ID of the task you want to delete |
 
-### Exemplo
+### Example
 
 ```bash
 curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
@@ -31,9 +36,9 @@ curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fe
 
 ---
 
-## Respostas
+## Responses
 
-### 200 — Tarefa apagada
+### 200 — Task deleted
 
 ```json
 {
@@ -41,7 +46,7 @@ curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fe
 }
 ```
 
-### 401 — Não autorizado
+### 401 — Unauthorized
 
 ```json
 {
@@ -50,9 +55,9 @@ curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fe
 }
 ```
 
-### 404 — Tarefa não encontrada
+### 404 — Task not found
 
-Ocorre quando o `task_id` informado não existe ou já foi apagado.
+Occurs when the provided `task_id` does not exist or has already been deleted.
 
 ```json
 {
