@@ -1,0 +1,97 @@
+---
+title: "Update Task"
+description: "Update the status, title, or description of an existing task."
+---
+
+# Update Task
+
+Updates one or more fields of an existing task. You can change the status, title, or description. At least one field must be provided.
+
+---
+
+## Request
+
+```
+PATCH /tasks/{task_id}
+```
+### Headers
+
+| Header | Value |
+|---|---|
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+| `Content-Type` | `application/json` |
+
+### URL Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `task_id` | string (uuid) | Yes | ID of the task you want to update |
+
+### Body
+
+At least one of the fields below must be provided.
+
+| Field | Type | Accepted values | Description |
+|---|---|---|---|
+| `status` | string | `pending`, `in_progress`, `done` | New status for the task |
+| `title` | string | — | New title for the task |
+| `description` | string | — | New description for the task |
+
+### Example
+
+```json
+{
+  "status": "in_progress"
+}
+```
+
+---
+
+## Responses
+
+### 200 — Task updated
+
+```json
+{
+  "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Write introduction page",
+  "description": "Draft the overview and getting started sections.",
+  "status": "in_progress",
+  "created_at": "2025-05-12T10:35:00.000Z",
+  "updated_at": "2025-05-12T11:00:00.000Z"
+}
+```
+
+The `updated_at` field is automatically updated with every change.
+
+### 400 — Bad request
+
+Occurs when the `status` value is not one of the accepted values, or when no field is provided.
+
+```json
+{
+  "error": "Bad Request",
+  "message": "Invalid status 'completed'. Allowed values are: pending, in_progress, done."
+}
+```
+
+### 401 — Unauthorized
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### 404 — Task not found
+
+Occurs when the provided `task_id` does not exist.
+
+```json
+{
+  "error": "Not Found",
+  "message": "No task found with task_id 'abc123'."
+}
+```
