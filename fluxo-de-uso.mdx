@@ -1,0 +1,35 @@
+# Autenticação
+
+Toda requisição feita à TaskFlow API precisa incluir uma chave de API válida no cabeçalho da requisição. Sem ela, a API retorna um erro `401 Unauthorized`.
+
+## Como autenticar
+
+Inclua o seguinte cabeçalho em todas as suas requisições:
+
+```
+Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a
+```
+
+## Exemplo prático
+
+```bash
+curl -X POST https://test-writechoice.onrender.com/projects \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "Meu projeto" }'
+```
+
+## O que acontece se a chave estiver ausente ou errada
+
+A API retorna o seguinte erro:
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+## Observação importante
+
+A API pode levar até 60 segundos para responder na primeira requisição após um período de inatividade. Esse comportamento é esperado. Se a requisição demorar mais do que isso, tente novamente.
