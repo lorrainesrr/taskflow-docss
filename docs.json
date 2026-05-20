@@ -7,28 +7,28 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentação",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Introdução",
-            "pages": ["introducao"]
+            "group": "Introduction",
+            "pages": ["introduction"]
           },
           {
-            "group": "Primeiros Passos",
-            "pages": ["autenticacao", "fluxo-de-uso"]
+            "group": "Getting Started",
+            "pages": ["authentication", "basic-usage-flow"]
           },
           {
-            "group": "Guias",
-            "pages": ["guia-tarefas"]
+            "group": "Guides",
+            "pages": ["task-guide"]
           },
           {
-            "group": "Referência da API",
+            "group": "API Reference",
             "pages": [
-              "ref-criar-projeto",
-              "ref-criar-tarefa",
-              "ref-listar-tarefas",
-              "ref-atualizar-tarefa",
-              "ref-apagar-tarefa"
+              "create-project",
+              "create-task",
+              "list-tasks",
+              "update-task",
+              "delete-task"
             ]
           }
         ]
