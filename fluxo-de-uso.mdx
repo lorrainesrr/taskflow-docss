@@ -10,6 +10,10 @@ TaskFlow has a mandatory order of operations. Understanding this before you star
 ## The order you need to follow
 Each step depends on the previous one. There are no shortcuts.
 
+1. Create a project     → you receive a project_id
+2. Create a task        → you use the project_id and receive a task_id
+3. Update or delete     → you use the task_id
+
 ## Why this order exists
 
 The API was designed to reflect how work actually happens: tasks always belong to a project. A `task_id` only exists after the project has been created and the task has been added to it.
