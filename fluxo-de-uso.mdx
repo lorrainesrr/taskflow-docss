@@ -1,41 +1,39 @@
-# Fluxo básico de uso
+---
+title: "Basic Usage Flow"
+description: "Understand the required order of operations before using the TaskFlow API."
+---
 
-A TaskFlow tem uma ordem obrigatória de operações. Entender isso antes de começar evita a maioria dos erros.
+# Basic Usage Flow
 
-## A ordem que você precisa seguir
+TaskFlow has a mandatory order of operations. Understanding this before you start will prevent most errors.
 
-```
-1. Criar um projeto        → você recebe um project_id
-2. Criar uma tarefa        → você usa o project_id e recebe um task_id
-3. Atualizar ou apagar     → você usa o task_id
-```
+## The order you need to follow
+Each step depends on the previous one. There are no shortcuts.
 
-Cada etapa depende da anterior. Não existe atalho.
+## Why this order exists
 
-## Por que essa ordem existe
+The API was designed to reflect how work actually happens: tasks always belong to a project. A `task_id` only exists after the project has been created and the task has been added to it.
 
-A API foi desenhada para refletir como o trabalho funciona na prática: tarefas sempre pertencem a um projeto. Um `task_id` só existe depois que o projeto foi criado e a tarefa foi adicionada a ele.
+## Task statuses
 
-## Os status de uma tarefa
+Every task starts with the status `pending`. From there, you can move it forward as work progresses:
 
-Toda tarefa criada começa com o status `pending`. A partir daí, você pode avançar conforme o trabalho progride:
-
-| Status | Significado |
+| Status | Meaning |
 |---|---|
-| `pending` | A tarefa ainda não foi iniciada |
-| `in_progress` | A tarefa está sendo trabalhada |
-| `done` | A tarefa foi concluída |
+| `pending` | The task has not been started |
+| `in_progress` | The task is actively being worked on |
+| `done` | The task has been completed |
 
-Você atualiza o status usando o endpoint `PATCH /tasks/{task_id}`.
+You update the status using the `PATCH /tasks/{task_id}` endpoint.
 
-## Resumo dos endpoints por ordem de uso
+## Endpoints in order of use
 
-| Ordem | Método | Endpoint | O que faz |
+| Order | Method | Endpoint | What it does |
 |---|---|---|---|
-| 1 | POST | `/projects` | Cria um projeto |
-| 2 | POST | `/tasks` | Cria uma tarefa no projeto |
-| 3 | GET | `/projects/{project_id}/tasks` | Lista as tarefas do projeto |
-| 4 | PATCH | `/tasks/{task_id}` | Atualiza uma tarefa |
-| 5 | DELETE | `/tasks/{task_id}` | Apaga uma tarefa |
+| 1 | POST | `/projects` | Creates a project |
+| 2 | POST | `/tasks` | Creates a task in the project |
+| 3 | GET | `/projects/{project_id}/tasks` | Lists tasks in the project |
+| 4 | PATCH | `/tasks/{task_id}` | Updates a task |
+| 5 | DELETE | `/tasks/{task_id}` | Deletes a task |
 
-Para um exemplo completo com requisições e respostas, veja o [Guia: do início ao fim](/guia-tarefas).
+For a full example with requests and responses, see the [Guide: from start to finish](/guia-tarefas).
