@@ -1,0 +1,30 @@
+{
+  "name": "TaskFlow API",
+  "colors": {
+    "primary": "#0069ED"
+  },
+  "navigation": [
+    {
+      "group": "Introdução",
+      "pages": ["introducao"]
+    },
+    {
+      "group": "Primeiros Passos",
+      "pages": ["autenticacao", "fluxo-de-uso"]
+    },
+    {
+      "group": "Guias",
+      "pages": ["guia-tarefas"]
+    },
+    {
+      "group": "Referência da API",
+      "pages": [
+        "ref-criar-projeto",
+        "ref-criar-tarefa",
+        "ref-listar-tarefas",
+        "ref-atualizar-tarefa",
+        "ref-apagar-tarefa"
+      ]
+    }
+  ]
+}
