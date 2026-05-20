@@ -5,15 +5,15 @@ description: "Update the status, title, or description of an existing task."
 
 # Update Task
 
-Updates one or more fields of an existing task. You can change the status, title, or description. At least one field must be provided.
+Updates one or more fields of an existing task. You can change the status, title, or description. At least one field must be provided to perform an update.
 
 ---
 
 ## Request
-
 ```
 PATCH /tasks/{task_id}
 ```
+
 ### Headers
 
 | Header | Value |
@@ -25,73 +25,68 @@ PATCH /tasks/{task_id}
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `task_id` | string (uuid) | Yes | ID of the task you want to update |
+| `task_id` | `string` (uuid) | Yes | The unique identifier of the task you want to update. |
 
 ### Body
 
-At least one of the fields below must be provided.
+At least one of the fields below must be provided in the request body.
 
 | Field | Type | Accepted values | Description |
 |---|---|---|---|
-| `status` | string | `pending`, `in_progress`, `done` | New status for the task |
-| `title` | string | — | New title for the task |
-| `description` | string | — | New description for the task |
+| `status` | `string` | `pending`, `in_progress`, `done` | The new status for the task. |
+| `title` | `string` | — | The new title for the task. |
+| `description` | `string` | — | The new description for the task. Can be `null`. |
 
 ### Example
 
 ```json
 {
-  "status": "in_progress"
+  "status": "in_progress",
+  "description": "Updated description for the task."
 }
-```
 
----
 
-## Responses
+Responses
+200 — Task updated
+The request was successful, and the task has been updated.
 
-### 200 — Task updated
-
-```json
 {
   "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
   "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   "title": "Write introduction page",
-  "description": "Draft the overview and getting started sections.",
+  "description": "Updated description for the task.",
   "status": "in_progress",
   "created_at": "2025-05-12T10:35:00.000Z",
   "updated_at": "2025-05-12T11:00:00.000Z"
 }
-```
 
-The `updated_at` field is automatically updated with every change.
+Note: The updated_at field is automatically refreshed by the API whenever a change is made.
 
-### 400 — Bad request
+400 — Bad request
+Occurs when the status value is invalid or when no fields are provided for the update.
 
-Occurs when the `status` value is not one of the accepted values, or when no field is provided.
-
-```json
 {
   "error": "Bad Request",
   "message": "Invalid status 'completed'. Allowed values are: pending, in_progress, done."
 }
-```
 
-### 401 — Unauthorized
 
-```json
+401 — Unauthorized
+Occurs when the API key is missing or invalid.
+
 {
   "error": "Unauthorized",
   "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
 }
-```
 
-### 404 — Task not found
 
-Occurs when the provided `task_id` does not exist.
+404 — Task not found
+Occurs when the provided task_id does not exist in the database.
 
-```json
 {
   "error": "Not Found",
   "message": "No task found with task_id 'abc123'."
 }
-```
+
+
+ 
