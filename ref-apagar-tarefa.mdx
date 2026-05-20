@@ -1,0 +1,62 @@
+# Apagar tarefa
+
+Apaga permanentemente uma tarefa. Essa ação não pode ser desfeita.
+
+---
+
+## Requisição
+
+```
+DELETE /tasks/{task_id}
+```
+
+### Cabeçalhos
+
+| Cabeçalho | Valor |
+|---|---|
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+
+### Parâmetros de URL
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `task_id` | string (uuid) | Sim | ID da tarefa que você quer apagar |
+
+### Exemplo
+
+```bash
+curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
+```
+
+---
+
+## Respostas
+
+### 200 — Tarefa apagada
+
+```json
+{
+  "message": "Task 'f9e8d7c6-b5a4-3210-fedc-ba9876543210' was successfully deleted."
+}
+```
+
+### 401 — Não autorizado
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### 404 — Tarefa não encontrada
+
+Ocorre quando o `task_id` informado não existe ou já foi apagado.
+
+```json
+{
+  "error": "Not Found",
+  "message": "No task found with task_id 'abc123'."
+}
+```
