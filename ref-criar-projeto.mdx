@@ -1,0 +1,80 @@
+# Criar projeto
+
+Cria um novo projeto. O `project_id` retornado é necessário para criar tarefas.
+
+**Você deve criar um projeto antes de qualquer outra operação.**
+
+---
+
+## Requisição
+
+```
+POST /projects
+```
+
+### Cabeçalhos
+
+| Cabeçalho | Valor |
+|---|---|
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+| `Content-Type` | `application/json` |
+
+### Body
+
+| Campo | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `name` | string | Sim | Nome do projeto |
+| `description` | string | Não | Descrição opcional do projeto |
+
+### Exemplo
+
+```json
+{
+  "name": "Documentação da API",
+  "description": "Reescrita completa da documentação pública."
+}
+```
+
+---
+
+## Respostas
+
+### 201 — Projeto criado
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "name": "Documentação da API",
+  "description": "Reescrita completa da documentação pública.",
+  "created_at": "2025-05-12T10:30:00.000Z"
+}
+```
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `project_id` | string (uuid) | Identificador único do projeto. Use nos próximos endpoints. |
+| `name` | string | Nome do projeto |
+| `description` | string ou null | Descrição do projeto, se informada |
+| `created_at` | string (date-time) | Data e hora de criação |
+
+### 400 — Requisição inválida
+
+Ocorre quando o campo `name` está ausente ou vazio.
+
+```json
+{
+  "error": "Bad Request",
+  "message": "The 'name' field is required and must be a non-empty string."
+}
+```
+
+### 401 — Não autorizado
+
+Ocorre quando a chave de API está ausente ou inválida.
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
