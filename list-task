@@ -1,0 +1,84 @@
+---
+title: List Tasks
+description: Returns all tasks belonging to a project.
+---
+
+# List Tasks
+
+Returns all tasks in a project. If the project exists but has no tasks yet, the response returns an empty list — not an error.
+
+---
+
+## Request
+
+GET /projects/{project_id}/tasks
+
+
+### Headers
+
+| Header          | Value                             |
+| --------------- | --------------------------------- |
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+
+### URL Parameters
+
+| Parameter    | Type          | Required | Description                              |
+| ------------ | ------------- | -------- | ---------------------------------------- |
+| `project_id` | string (uuid) | Yes      | ID of the project whose tasks you want to list |
+
+### Example
+
+```bash
+curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
+```
+
+---
+
+## Responses
+
+### 200 — Tasks returned
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "total": 1,
+  "tasks": [
+    {
+      "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+      "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "title": "Write introduction page",
+      "description": "Draft the overview and getting started sections.",
+      "status": "pending",
+      "created_at": "2025-05-12T10:35:00.000Z",
+      "updated_at": "2025-05-12T10:35:00.000Z"
+    }
+  ]
+}
+```
+
+| Field        | Type          | Description                                              |
+| ------------ | ------------- | -------------------------------------------------------- |
+| `project_id` | string (uuid) | ID of the project                                        |
+| `total`      | integer       | Total number of tasks in the project                     |
+| `tasks`      | array         | List of tasks. Empty if no tasks have been created yet.  |
+
+### 401 — Unauthorized
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### 404 — Project not found
+
+Occurs when the provided `project_id` does not exist.
+
+```json
+{
+  "error": "Not Found",
+  "message": "No project found with project_id 'abc123'."
+}
+```
