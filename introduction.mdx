@@ -1,0 +1,30 @@
+---
+title: "Introduction"
+description: "Overview of the TaskFlow API and how it works."
+---
+
+# Introduction
+
+TaskFlow is a task management API. With it, you create projects, organize tasks within those projects, and track the progress of each one over time.
+
+## What you can do
+
+- Create projects to organize your work
+- Add tasks to those projects
+- List all tasks in a project
+- Update the status of a task as it progresses
+- Delete tasks that are no longer needed
+
+## How the API works
+
+TaskFlow follows a dependency logic between resources: you need a project before creating tasks, and you need a task before updating or deleting it.
+
+This order is not optional. If you try to create a task without a valid `project_id`, the API will return an error.
+
+The basic flow is always this:
+
+Create project → Create task → Update or delete task
+
+## Before you start
+
+You will need an API key to authenticate your requests. See how to use it on the [Authentication](/autenticacao) page.
