@@ -1,45 +1,50 @@
-# Guia: do início ao fim
+---
+title: "Guide: From Start to Finish"
+description: "A complete walkthrough of the TaskFlow API from scratch."
+---
 
-Este guia mostra como usar a TaskFlow API na prática, do zero. Cada passo usa o resultado do anterior, então siga a ordem.
+# Guide: From Start to Finish
+
+This guide shows how to use the TaskFlow API in practice, from scratch. Each step uses the result of the previous one, so follow the order.
 
 ---
 
-## Passo 1: Criar um projeto
+## Step 1: Create a project
 
-Antes de qualquer coisa, você precisa de um projeto. O `project_id` retornado aqui vai ser usado no próximo passo.
+Before anything else, you need a project. The `project_id` returned here will be used in the next step.
 
-**Requisição**
+**Request**
 
 ```bash
 curl -X POST https://test-writechoice.onrender.com/projects \
   -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Documentação da API",
-    "description": "Reescrita completa da documentação pública."
+    "name": "API Documentation",
+    "description": "Complete rewrite of the public documentation."
   }'
 ```
 
-**Resposta**
+**Response**
 
 ```json
 {
   "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "name": "Documentação da API",
-  "description": "Reescrita completa da documentação pública.",
+  "name": "API Documentation",
+  "description": "Complete rewrite of the public documentation.",
   "created_at": "2025-05-12T10:30:00.000Z"
 }
 ```
 
-Guarde o `project_id`. Você vai precisar dele agora.
+Save the `project_id`. You will need it in the next step.
 
 ---
 
-## Passo 2: Criar uma tarefa
+## Step 2: Create a task
 
-Com o `project_id` em mãos, crie sua primeira tarefa. Ela nasce automaticamente com o status `pending`.
+With the `project_id` in hand, create your first task. It is automatically created with the status `pending`.
 
-**Requisição**
+**Request**
 
 ```bash
 curl -X POST https://test-writechoice.onrender.com/tasks \
@@ -47,41 +52,41 @@ curl -X POST https://test-writechoice.onrender.com/tasks \
   -H "Content-Type: application/json" \
   -d '{
     "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "title": "Escrever página de introdução",
-    "description": "Redigir visão geral e seção de primeiros passos."
+    "title": "Write introduction page",
+    "description": "Draft the overview and getting started sections."
   }'
 ```
 
-**Resposta**
+**Response**
 
 ```json
 {
   "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
   "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "title": "Escrever página de introdução",
-  "description": "Redigir visão geral e seção de primeiros passos.",
+  "title": "Write introduction page",
+  "description": "Draft the overview and getting started sections.",
   "status": "pending",
   "created_at": "2025-05-12T10:35:00.000Z",
   "updated_at": "2025-05-12T10:35:00.000Z"
 }
 ```
 
-Guarde o `task_id`. Você vai usá-lo para atualizar ou apagar essa tarefa.
+Save the `task_id`. You will use it to update or delete this task.
 
 ---
 
-## Passo 3: Listar as tarefas do projeto
+## Step 3: List tasks in the project
 
-Para ver todas as tarefas de um projeto, passe o `project_id` na URL.
+To see all tasks in a project, pass the `project_id` in the URL.
 
-**Requisição**
+**Request**
 
 ```bash
 curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks \
   -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
 ```
 
-**Resposta**
+**Response**
 
 ```json
 {
@@ -91,8 +96,8 @@ curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-ab
     {
       "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
       "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "title": "Escrever página de introdução",
-      "description": "Redigir visão geral e seção de primeiros passos.",
+      "title": "Write introduction page",
+      "description": "Draft the overview and getting started sections.",
       "status": "pending",
       "created_at": "2025-05-12T10:35:00.000Z",
       "updated_at": "2025-05-12T10:35:00.000Z"
@@ -103,11 +108,11 @@ curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-ab
 
 ---
 
-## Passo 4: Atualizar uma tarefa
+## Step 4: Update a task
 
-Use o `task_id` para atualizar o status, o título ou a descrição de uma tarefa. Pelo menos um campo precisa ser enviado.
+Use the `task_id` to update the status, title, or description of a task. At least one field must be provided.
 
-**Requisição**
+**Request**
 
 ```bash
 curl -X PATCH https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
@@ -118,14 +123,14 @@ curl -X PATCH https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fed
   }'
 ```
 
-**Resposta**
+**Response**
 
 ```json
 {
   "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
   "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "title": "Escrever página de introdução",
-  "description": "Redigir visão geral e seção de primeiros passos.",
+  "title": "Write introduction page",
+  "description": "Draft the overview and getting started sections.",
   "status": "in_progress",
   "created_at": "2025-05-12T10:35:00.000Z",
   "updated_at": "2025-05-12T11:00:00.000Z"
@@ -134,18 +139,18 @@ curl -X PATCH https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fed
 
 ---
 
-## Passo 5: Apagar uma tarefa
+## Step 5: Delete a task
 
-Quando uma tarefa não é mais necessária, você pode apagá-la. Essa ação não tem volta.
+When a task is no longer needed, you can delete it. This action cannot be undone.
 
-**Requisição**
+**Request**
 
 ```bash
 curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
   -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
 ```
 
-**Resposta**
+**Response**
 
 ```json
 {
@@ -155,4 +160,4 @@ curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fe
 
 ---
 
-Para a referência completa de cada endpoint com todos os parâmetros e códigos de erro, acesse a seção [Referência da API](/referencia).
+For the complete reference of each endpoint with all parameters and error codes, see the [API Reference](/ref-criar-projeto).
