@@ -1,0 +1,158 @@
+# Guia: do início ao fim
+
+Este guia mostra como usar a TaskFlow API na prática, do zero. Cada passo usa o resultado do anterior, então siga a ordem.
+
+---
+
+## Passo 1: Criar um projeto
+
+Antes de qualquer coisa, você precisa de um projeto. O `project_id` retornado aqui vai ser usado no próximo passo.
+
+**Requisição**
+
+```bash
+curl -X POST https://test-writechoice.onrender.com/projects \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Documentação da API",
+    "description": "Reescrita completa da documentação pública."
+  }'
+```
+
+**Resposta**
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "name": "Documentação da API",
+  "description": "Reescrita completa da documentação pública.",
+  "created_at": "2025-05-12T10:30:00.000Z"
+}
+```
+
+Guarde o `project_id`. Você vai precisar dele agora.
+
+---
+
+## Passo 2: Criar uma tarefa
+
+Com o `project_id` em mãos, crie sua primeira tarefa. Ela nasce automaticamente com o status `pending`.
+
+**Requisição**
+
+```bash
+curl -X POST https://test-writechoice.onrender.com/tasks \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Escrever página de introdução",
+    "description": "Redigir visão geral e seção de primeiros passos."
+  }'
+```
+
+**Resposta**
+
+```json
+{
+  "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Escrever página de introdução",
+  "description": "Redigir visão geral e seção de primeiros passos.",
+  "status": "pending",
+  "created_at": "2025-05-12T10:35:00.000Z",
+  "updated_at": "2025-05-12T10:35:00.000Z"
+}
+```
+
+Guarde o `task_id`. Você vai usá-lo para atualizar ou apagar essa tarefa.
+
+---
+
+## Passo 3: Listar as tarefas do projeto
+
+Para ver todas as tarefas de um projeto, passe o `project_id` na URL.
+
+**Requisição**
+
+```bash
+curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
+```
+
+**Resposta**
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "total": 1,
+  "tasks": [
+    {
+      "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+      "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "title": "Escrever página de introdução",
+      "description": "Redigir visão geral e seção de primeiros passos.",
+      "status": "pending",
+      "created_at": "2025-05-12T10:35:00.000Z",
+      "updated_at": "2025-05-12T10:35:00.000Z"
+    }
+  ]
+}
+```
+
+---
+
+## Passo 4: Atualizar uma tarefa
+
+Use o `task_id` para atualizar o status, o título ou a descrição de uma tarefa. Pelo menos um campo precisa ser enviado.
+
+**Requisição**
+
+```bash
+curl -X PATCH https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "in_progress"
+  }'
+```
+
+**Resposta**
+
+```json
+{
+  "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Escrever página de introdução",
+  "description": "Redigir visão geral e seção de primeiros passos.",
+  "status": "in_progress",
+  "created_at": "2025-05-12T10:35:00.000Z",
+  "updated_at": "2025-05-12T11:00:00.000Z"
+}
+```
+
+---
+
+## Passo 5: Apagar uma tarefa
+
+Quando uma tarefa não é mais necessária, você pode apagá-la. Essa ação não tem volta.
+
+**Requisição**
+
+```bash
+curl -X DELETE https://test-writechoice.onrender.com/tasks/f9e8d7c6-b5a4-3210-fedc-ba9876543210 \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
+```
+
+**Resposta**
+
+```json
+{
+  "message": "Task 'f9e8d7c6-b5a4-3210-fedc-ba9876543210' was successfully deleted."
+}
+```
+
+---
+
+Para a referência completa de cada endpoint com todos os parâmetros e códigos de erro, acesse a seção [Referência da API](/referencia).
