@@ -1,0 +1,100 @@
+---
+title: "Create Task"
+description: "Create a new task inside an existing project."
+---
+
+# Create Task
+
+Creates a new task inside an existing project. Every task is created with the status `pending` by default.
+
+**You need a valid `project_id` to use this endpoint. Create a project first.**
+
+---
+
+## Request
+```
+POST /tasks
+```
+### Headers
+
+| Header | Value |
+|---|---|
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+| `Content-Type` | `application/json` |
+
+### Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `project_id` | string (uuid) | Yes | ID of the project the task belongs to |
+| `title` | string | Yes | Title of the task |
+| `description` | string | No | Optional description of the task |
+
+### Example
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Write introduction page",
+  "description": "Draft the overview and getting started sections."
+}
+```
+
+---
+
+## Responses
+
+### 201 — Task created
+
+```json
+{
+  "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Write introduction page",
+  "description": "Draft the overview and getting started sections.",
+  "status": "pending",
+  "created_at": "2025-05-12T10:35:00.000Z",
+  "updated_at": "2025-05-12T10:35:00.000Z"
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `task_id` | string (uuid) | Unique identifier for the task. Use it to update or delete. |
+| `project_id` | string (uuid) | ID of the project the task belongs to |
+| `title` | string | Title of the task |
+| `description` | string or null | Task description, if provided |
+| `status` | string | Current status. Always starts as `pending`. |
+| `created_at` | string (date-time) | Date and time of creation |
+| `updated_at` | string (date-time) | Date and time of the last update |
+
+### 400 — Bad request
+
+Occurs when `project_id` or `title` are missing.
+
+```json
+{
+  "error": "Bad Request",
+  "message": "The 'title' field is required and must be a non-empty string."
+}
+```
+
+### 401 — Unauthorized
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### 404 — Project not found
+
+Occurs when the provided `project_id` does not exist.
+
+```json
+{
+  "error": "Not Found",
+  "message": "No project found with project_id 'abc123'. Create a project first using POST /projects."
+}
+```
