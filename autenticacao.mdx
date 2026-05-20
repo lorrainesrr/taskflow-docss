@@ -10,3 +10,29 @@ Every request to the TaskFlow API must include a valid API key in the request he
 ## How to authenticate
 
 Include the following header in all your requests:
+
+Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a
+
+## Example
+
+```bash
+curl -X POST https://test-writechoice.onrender.com/projects \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "My project" }'
+```
+
+## What happens if the key is missing or invalid
+
+The API returns the following error:
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+## Important note
+
+The API may take up to 60 seconds to respond on the first request after a period of inactivity. This is expected behavior. If the request takes longer than that, try again.
