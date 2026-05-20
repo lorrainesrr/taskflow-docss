@@ -1,0 +1,80 @@
+# Listar tarefas
+
+Retorna todas as tarefas de um projeto. Se o projeto existir mas não tiver nenhuma tarefa, a resposta vem com uma lista vazia, sem erro.
+
+---
+
+## Requisição
+
+```
+GET /projects/{project_id}/tasks
+```
+
+### Cabeçalhos
+
+| Cabeçalho | Valor |
+|---|---|
+| `Authorization` | `Bearer tf-live-4a8f2c1e9b3d7e6a` |
+
+### Parâmetros de URL
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `project_id` | string (uuid) | Sim | ID do projeto cujas tarefas você quer listar |
+
+### Exemplo
+
+```bash
+curl -X GET https://test-writechoice.onrender.com/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks \
+  -H "Authorization: Bearer tf-live-4a8f2c1e9b3d7e6a"
+```
+
+---
+
+## Respostas
+
+### 200 — Tarefas retornadas
+
+```json
+{
+  "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "total": 1,
+  "tasks": [
+    {
+      "task_id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
+      "project_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "title": "Escrever página de introdução",
+      "description": "Redigir visão geral e seção de primeiros passos.",
+      "status": "pending",
+      "created_at": "2025-05-12T10:35:00.000Z",
+      "updated_at": "2025-05-12T10:35:00.000Z"
+    }
+  ]
+}
+```
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `project_id` | string (uuid) | ID do projeto consultado |
+| `total` | integer | Total de tarefas no projeto |
+| `tasks` | array | Lista de tarefas. Vazia se nenhuma tarefa foi criada ainda. |
+
+### 401 — Não autorizado
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### 404 — Projeto não encontrado
+
+Ocorre quando o `project_id` informado não existe.
+
+```json
+{
+  "error": "Not Found",
+  "message": "No project found with project_id 'abc123'."
+}
+```
